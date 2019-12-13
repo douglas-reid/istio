@@ -47,6 +47,7 @@ func (s *DiscoveryServer) pushRoute(con *XdsConnection, push *model.PushContext,
 		return err
 	}
 	rdsPushes.Increment()
+	rdsConfigPushes.Increment()
 
 	adsLog.Infof("RDS: PUSH for node:%s routes:%d", con.node.ID, len(rawRoutes))
 	return nil

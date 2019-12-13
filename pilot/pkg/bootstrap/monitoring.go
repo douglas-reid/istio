@@ -20,9 +20,12 @@ import (
 	"net/http"
 
 	ocprom "contrib.go.opencensus.io/exporter/prometheus"
+	"contrib.go.opencensus.io/exporter/stackdriver"
+	"contrib.go.opencensus.io/exporter/stackdriver/monitoredresource"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.opencensus.io/stats/view"
 
+	"istio.io/istio/pilot/pkg/util/monitoring"
 	"istio.io/pkg/log"
 	"istio.io/pkg/version"
 )
@@ -54,6 +57,33 @@ func addMonitor(mux *http.ServeMux) error {
 	return nil
 }
 
+// in this example, not maybe :)
+func maybeConfigureStackdriverExport() {
+	// check for stackdriver enablement, here just assume
+	labels := &stackdriver.Labels{}
+	labels.Set("mesh_uid", "my-very-big-mesh", "ID for Mesh") // get from env or arg
+	labels.Set("revision", version.Info.String(), "Control plane revision")
+
+	// need to update OC stackdriver library
+	se, _ := stackdriver.NewExporter(stackdriver.Options{
+		MetricPrefix: "IstioControlPlane",
+		// this is deprecated, but reading the code, it appears to be required
+		// MetricPrefix / GetMetricPrefix seems to be ignored
+		GetMetricType: monitoring.GetMetricType,
+		// SkipCMD:                 true,                           // only works if all reported metrics are known
+		MonitoredResource:       monitoredresource.Autodetect(), // works for GKE, GCE, AWS EC2
+		DefaultMonitoringLabels: labels,
+	})
+
+	// need either this or the view.RegisterExporter call below. This is the
+	// new style.
+	// Ideally, this should be paired with StopMetricsExporter in monitor.Close()
+	se.StartMetricsExporter()
+
+	// in real PR, check err, handle appropriately, also use StartMetricsExport
+	view.RegisterExporter(se)
+}
+
 // Deprecated: we shouldn't have 2 http ports. Will be removed after code using
 // this port is removed.
 func startMonitor(addr string, mux *http.ServeMux) (*monitor, error) {
@@ -67,6 +97,8 @@ func startMonitor(addr string, mux *http.ServeMux) (*monitor, error) {
 	if listener, err = net.Listen("tcp", addr); err != nil {
 		return nil, fmt.Errorf("unable to listen on socket: %v", err)
 	}
+
+	maybeConfigureStackdriverExport()
 
 	// NOTE: this is a temporary solution to provide bare-bones debug functionality
 	// for pilot. a full design / implementation of self-monitoring and reporting

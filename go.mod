@@ -11,9 +11,10 @@ replace github.com/spf13/viper => github.com/istio/viper v1.3.3-0.20190515210538
 replace github.com/docker/docker => github.com/docker/engine v1.4.2-0.20191011211953-adfac697dc5b
 
 require (
-	cloud.google.com/go v0.38.0
+	cloud.google.com/go v0.49.0
+	cloud.google.com/go/logging v1.0.0
 	contrib.go.opencensus.io/exporter/prometheus v0.1.0
-	contrib.go.opencensus.io/exporter/stackdriver v0.6.0
+	contrib.go.opencensus.io/exporter/stackdriver v0.12.8
 	contrib.go.opencensus.io/exporter/zipkin v0.1.1
 	fortio.org/fortio v1.3.1
 	github.com/DataDog/datadog-go v2.2.0+incompatible
@@ -26,7 +27,7 @@ require (
 	github.com/alicebob/miniredis v0.0.0-20180201100744-9d52b1fc8da9
 	github.com/armon/go-metrics v0.0.0-20190430140413-ec5e00d3c878 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
-	github.com/aws/aws-sdk-go v1.16.36
+	github.com/aws/aws-sdk-go v1.26.1
 	github.com/bitly/go-hostpool v0.0.0-20171023180738-a3a6125de932 // indirect
 	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
 	github.com/cactus/go-statsd-client v3.1.1+incompatible
@@ -63,10 +64,9 @@ require (
 	github.com/gocql/gocql v0.0.0-20190423091413-b99afaf3b163 // indirect
 	github.com/gogo/protobuf v1.3.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
+	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/golang/sync v0.0.0-20180314180146-1d60e4601c6f
-	github.com/google/btree v1.0.0 // indirect
 	github.com/google/cel-go v0.2.0
 	github.com/google/go-cmp v0.3.1
 	github.com/google/go-github v17.0.0+incompatible
@@ -130,23 +130,24 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.4.0
-	github.com/stretchr/testify v1.3.0
+	github.com/stretchr/testify v1.4.0
 	github.com/tinylib/msgp v1.0.2 // indirect
 	github.com/uber/jaeger-client-go v0.0.0-20190228190846-ecf2d03a9e80
 	github.com/uber/jaeger-lib v2.0.0+incompatible // indirect
 	github.com/yashtewari/glob-intersection v0.0.0-20180206001645-7af743e8ec84 // indirect
 	github.com/yl2chen/cidranger v0.0.0-20180214081945-928b519e5268
 	github.com/yuin/gopher-lua v0.0.0-20180316054350-84ea3a3c79b3 // indirect
-	go.opencensus.io v0.21.0
+	go.opencensus.io v0.22.2
 	go.uber.org/atomic v1.4.0
 	go.uber.org/zap v1.10.0
-	golang.org/x/net v0.0.0-20191014212845-da9a3fd4c582
-	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
+	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
+	golang.org/x/oauth2 v0.0.0-20191202225959-858c2ad4c8b6
+	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449 // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4
-	golang.org/x/tools v0.0.0-20190624180213-70d37148ca0c
-	google.golang.org/api v0.8.0
-	google.golang.org/genproto v0.0.0-20191009194640-548a555dbc03
+	golang.org/x/tools v0.0.0-20191115202509-3a792d9c32b2
+	google.golang.org/api v0.14.0
+	google.golang.org/appengine v1.6.5 // indirect
+	google.golang.org/genproto v0.0.0-20191206224255-0243a4be9c8f
 	google.golang.org/grpc v1.25.1
 	gopkg.in/d4l3k/messagediff.v1 v1.2.1
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect

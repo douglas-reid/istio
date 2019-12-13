@@ -62,6 +62,7 @@ func (s *DiscoveryServer) pushCds(con *XdsConnection, push *model.PushContext, v
 		return err
 	}
 	cdsPushes.Increment()
+	cdsConfigPushes.Increment()
 
 	// The response can't be easily read due to 'any' marshaling.
 	adsLog.Infof("CDS: PUSH for node:%s clusters:%d services:%d version:%s",

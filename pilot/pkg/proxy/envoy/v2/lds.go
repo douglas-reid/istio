@@ -40,6 +40,7 @@ func (s *DiscoveryServer) pushLds(con *XdsConnection, push *model.PushContext, v
 		return err
 	}
 	ldsPushes.Increment()
+	ldsConfigPushes.Increment()
 
 	adsLog.Infof("LDS: PUSH for node:%s listeners:%d", con.node.ID, len(rawListeners))
 	return nil
