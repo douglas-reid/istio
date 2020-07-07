@@ -57,7 +57,7 @@ var (
 func checkMetadataHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		fmt.Println("request for: " + r.URL.Path)
+		log.Println("request for: " + r.URL.Path)
 		w.Header().Add("Server", "Metadata Server for VM (Fake)")
 		w.Header().Add("Metadata-Flavor", "Google")
 
@@ -117,9 +117,9 @@ func main() {
 		}
 	}()
 
-	fmt.Println("GCE metadata server started (" + addr + ")")
+	log.Println("GCE metadata server started (" + addr + ")")
 	<-done
-	fmt.Println("GCE metadata server stopped.")
+	log.Println("GCE metadata server stopped.")
 
 	if err := srv.Shutdown(context.Background()); err != nil {
 		log.Fatalf("GCE Metadata Shutdown Failed: %+v", err)
