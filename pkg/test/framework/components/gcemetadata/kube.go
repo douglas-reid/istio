@@ -18,7 +18,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
@@ -72,13 +71,9 @@ func newKube(ctx resource.Context, cfg Config) (Instance, error) {
 	}
 
 	// apply YAML
-	yamlContent, err := ioutil.ReadFile(environ.GCEMetadataServerInstallFilePath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read %q, err: %v", environ.GCEMetadataServerInstallFilePath, err)
-	}
-
-	if _, err := c.cluster.ApplyContents(c.ns.Name(), string(yamlContent)); err != nil {
-		return nil, fmt.Errorf("failed to apply rendered %q, err: %v", environ.GCEMetadataServerInstallFilePath, err)
+	// apply stackdriver YAML
+	if err := c.cluster.ApplyYAMLFiles(c.ns.Name(), environ.GCEMetadataServerInstallFilePath); err != nil {
+		return nil, fmt.Errorf("failed to apply rendered %s, err: %v", environ.GCEMetadataServerInstallFilePath, err)
 	}
 
 	fetchFn := testKube.NewSinglePodFetch(c.cluster.Accessor, c.ns.Name(), "app=gce-metadata")
